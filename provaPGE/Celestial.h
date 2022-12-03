@@ -21,6 +21,8 @@ namespace Celestial {
 		Celestial(olc::PixelGameEngine* game) : Balls(game) {}
 		Celestial(olc::vd2d pos, olc::vd2d vel, double mass) : Balls(pos, vel), m_mass(mass) {}
 	
+		void ChangePos(olc::PixelGameEngine* game, float fElapsedTime);
+
 		std::vector<olc::vd2d> Choords() const override;
 	};
 
