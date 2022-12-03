@@ -22,9 +22,8 @@ void Balls::Redo(olc::PixelGameEngine* game)
 	rad = rand() % 5 + 1;
 }
 
-
 // Changes the ball position based on user input and the natural behaviour of the ball
-void Balls::ChangePos(olc::PixelGameEngine* game, float fElapsedTime)
+void Balls::ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine)
 {
 	if (game->GetKey(olc::Key::W).bHeld || game->GetKey(olc::Key::UP).bHeld) m_pos.y -= m_vel.y * fElapsedTime;
 	if (game->GetKey(olc::Key::A).bHeld || game->GetKey(olc::Key::LEFT).bHeld) m_pos.x -= m_vel.x * fElapsedTime;
@@ -39,8 +38,9 @@ void Balls::Reset(olc::PixelGameEngine* game)
 	m_pos.y = game->ScreenHeight() / 2.f;
 }
 
+
 // Changes the ball position based on user input and the natural behaviour of the ball
-void GravityBalls::ChangePos(olc::PixelGameEngine* game, float fElapsedTime)
+void GravityBalls::ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine)
 {
 	if (game->GetKey(olc::Key::W).bHeld || game->GetKey(olc::Key::UP).bHeld)
 	// Moves UP with a constant velocity -m_vel.y
