@@ -1,3 +1,4 @@
+#include "MovementeEngine.h"
 #include "olcPixelGameEngine.h"
 
 #include "Balls.h"
@@ -5,11 +6,19 @@
 #ifndef __INTERFACE__
 #define __INTERFACE__
 
+enum Integrators {
+	EULER = 1,
+	RK4,
+	CELESTIAL,
+};
+
 class Interface : public olc::PixelGameEngine
 {
 protected:
 	GravityBalls ball{ this };
-	int mode = 1;
+	enum Integrators mode = EULER;
+	bool mode_changed = false;
+	MovementEngine* engine;
 
 public:
 	//constructor

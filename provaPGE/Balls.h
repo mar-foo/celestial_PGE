@@ -28,7 +28,7 @@ public:
 	void SelfDraw(olc::PixelGameEngine* game) const;
 	void SelfDraw(olc::PixelGameEngine* game, olc::Pixel p) const;
 	//Old Change Position
-	void ChangePos(olc::PixelGameEngine* game, float fElapsedTime);
+	void ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine);
 	//reset to Initial Parameters
 	void Reset(olc::PixelGameEngine* game);
 
@@ -50,7 +50,7 @@ public:
 	GravityBalls(olc::PixelGameEngine* game) : Balls(game) {}
 	//Methods
 	//This change the position, it is implemented using Euler Integration.... Next Version will use Movement Engine
-	void ChangePos(olc::PixelGameEngine* game, float fElapsedTime);
+	void ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine);
 	//Print to screen the ball stats
 	void DisplayStats(olc::PixelGameEngine* game) const;
 	//Checks for collisions

@@ -1,8 +1,17 @@
 #include "Interface.h"
+#include "MovementeEngine.h"
 
 bool Interface::OnUserCreate()
 {
-
+	switch (mode)
+	{
+	case EULER:
+		this->engine = new Euler;
+		break;
+	case RK4:
+		this->engine = new RK4;
+		break;
+	}
 	return true;
 }
 
@@ -22,27 +31,50 @@ bool Interface::OnUserUpdate(float fElapsedTime)
 	DrawLineDecal({ 0.f, ScreenHeight() / 2.f }, { (float)ScreenWidth(), ScreenHeight() / 2.f });
 	DrawLineDecal({ ScreenWidth() / 2.f, 0.f }, { ScreenWidth() / 2.f, ScreenHeight() * 1.f });
 
-
 	// Functioning Mode selector
-	if (GetKey(olc::Key::K1).bPressed) mode = 1;
-	if (GetKey(olc::Key::K2).bPressed) mode = 2;
-	if (GetKey(olc::Key::K3).bPressed) mode = 3;
-
+        if (mode != EULER && GetKey(olc::Key::K1).bPressed)
+	{
+		/* Testing Euler Integration Methods */
+		mode = EULER;
+		mode_changed = true;
+	}
+        if (mode != RK4 && GetKey(olc::Key::K2).bPressed)
+	{
+		mode = RK4;
+		mode_changed = true;
+	}
+	if (GetKey(olc::Key::K3).bPressed)
+	{
+		mode = CELESTIAL;
+		mode_changed = true;
+	}
 
 	switch (mode)
 	{
-	case 1:
-		/* Testing Euler Integration Methods */
+	case EULER:
 		DrawStringDecal({ 5., 25. }, "Mode " + std::to_string(mode) + ":\tEuler", olc::GREEN);
 		Clear(olc::BLACK);
-		ball.ChangePos(this, fElapsedTime);
+		if (mode_changed)
+		{
+			mode_changed = false;
+			free(engine);
+			engine = new Euler;
+		}
+		ball.ChangePos(this, fElapsedTime, this->engine);
 		break;
-	case 2:
+	case RK4:
 		/* Testing Runge Kutta 4 Integration Methods */
 		DrawStringDecal({ 5., 25. }, "Mode " + std::to_string(mode) + ":\tRK4", olc::GREEN);
 		Clear(olc::DARK_BLUE);
+		if (mode_changed)
+		{
+			mode_changed = false;
+			free(engine);
+			engine = new RK4;
+		}
+		ball.ChangePos(this, fElapsedTime, engine);
 		break;
-	case 3:
+	case CELESTIAL:
 		/* Celestial Movement  WIP */
 		Clear(olc::WHITE);
 		break;
