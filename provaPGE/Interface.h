@@ -27,6 +27,8 @@ public:
 		sAppName = "Proviamo";
 	}
 
+	~Interface() { if (engine) free(engine); };
+
 public:
 	//creation
 	bool OnUserCreate() override;
