@@ -1,0 +1,16 @@
+SRCS_DIR = ../S
+
+CC = g++
+SRCS = main.cpp
+OBJ = main.o Balls.o
+
+main = $(OBJ)
+	$(CC) -o $@ $<
+
+*.o:
+	$(CC) -c -o £@ $<
+
+clean:
+	rm -f main *.o
+
+.PHONY: clean
