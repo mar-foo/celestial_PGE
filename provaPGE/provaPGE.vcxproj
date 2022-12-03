@@ -145,9 +145,6 @@
     <ClInclude Include="VectorOp.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="CMakeLists.txt" />
     <Text Include="makefile.txt" />
   </ItemGroup>
