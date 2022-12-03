@@ -9,7 +9,7 @@ bool Interface::OnUserCreate()
 		this->engine = new Euler;
 		break;
 	case RK4:
-		this->engine = new RK4;
+		this->engine = new class RK4;
 		break;
 	}
 	return true;
@@ -57,7 +57,7 @@ bool Interface::OnUserUpdate(float fElapsedTime)
 		if (mode_changed)
 		{
 			mode_changed = false;
-			free(engine);
+			delete(engine);
 			engine = new Euler;
 		}
 		ball.ChangePos(this, fElapsedTime, this->engine);
@@ -69,8 +69,8 @@ bool Interface::OnUserUpdate(float fElapsedTime)
 		if (mode_changed)
 		{
 			mode_changed = false;
-			free(engine);
-			engine = new RK4;
+			delete(engine);
+			engine = new class RK4;
 		}
 		ball.ChangePos(this, fElapsedTime, engine);
 		break;
