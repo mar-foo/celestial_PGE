@@ -17,16 +17,6 @@ bool Interface::OnUserCreate()
 
 bool Interface::OnUserUpdate(float fElapsedTime)
 {
-	/* V1
-		for (int i = 0; i < ScreenWidth(); i++)
-		{
-			for (int j = 0; j < ScreenHeight(); j++)
-			{
-				Draw(i, j, olc::Pixel(rand() % 256, rand() % 256, rand() % 256, rand() % 256));
-			}
-		}
-	*/
-
 	// Adding a Grid
 	DrawLineDecal({ 0.f, ScreenHeight() / 2.f }, { (float)ScreenWidth(), ScreenHeight() / 2.f });
 	DrawLineDecal({ ScreenWidth() / 2.f, 0.f }, { ScreenWidth() / 2.f, ScreenHeight() * 1.f });
@@ -80,14 +70,9 @@ bool Interface::OnUserUpdate(float fElapsedTime)
 		break;
 	}
 
-
 	// Balls Drawer
 	ball.SelfDraw(this, olc::RED);
 	ball.DisplayStats(this);
-
-	/* V2
-	ball.Redo(this);
-*/
 
 	// Reset Button
 	if (GetKey(olc::Key::SPACE).bPressed) ball.Reset(this);
@@ -97,5 +82,3 @@ bool Interface::OnUserUpdate(float fElapsedTime)
 
 	return true;
 }
-
-
