@@ -58,7 +58,8 @@ public:
 	bool CheckLateralCollision(olc::PixelGameEngine* game) const;
 	//Managing Collisions
 	void ManageCollision(olc::PixelGameEngine* game, float fElapsedTime);
-	//Methods to group stats in a choordinates vector... next revision maybe will use array instead of vector
+	std::array<olc::vd2d, 2> Equation(float fElapsedTime, olc::vd2d position, olc::vd2d speed) const;
+	// Methods to group stats in a choordinates vector... next revision maybe will use array instead of vector
 	std::vector<olc::vd2d> Choords() const override;
 };
 
