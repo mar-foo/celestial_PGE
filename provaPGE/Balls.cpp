@@ -2,28 +2,20 @@
 
 // Draws the Ball, takes in input the game engine
 // this version randomizes ball color
-void Balls::SelfDraw(olc::PixelGameEngine* game) const
+void Ball::SelfDraw(olc::PixelGameEngine* game) const
 {
 	olc::Pixel color(rand() % 256, rand() % 256, rand() % 256, rand() % 256);
 	game->DrawCircle(m_pos, rad, color);
 }
 
 // Draws the Ball, takes in input the game engine and a color
-void Balls::SelfDraw(olc::PixelGameEngine* game, olc::Pixel p) const
+void Ball::SelfDraw(olc::PixelGameEngine* game, olc::Pixel p) const
 {
 	game->DrawCircle(m_pos, rad, p);
 }
 
-
-// create a ball of random radius in a random position
-void Balls::Redo(olc::PixelGameEngine* game)
-{
-	m_pos = { (float)rand() / RAND_MAX * game->ScreenWidth(), (float)rand() / RAND_MAX * game->ScreenWidth() };
-	rad = rand() % 5 + 1;
-}
-
 // Changes the ball position based on user input and the natural behaviour of the ball
-void Balls::ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine)
+void Ball::ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine)
 {
 	if (game->GetKey(olc::Key::W).bHeld || game->GetKey(olc::Key::UP).bHeld) m_pos.y -= m_vel.y * fElapsedTime;
 	if (game->GetKey(olc::Key::A).bHeld || game->GetKey(olc::Key::LEFT).bHeld) m_pos.x -= m_vel.x * fElapsedTime;
@@ -32,15 +24,14 @@ void Balls::ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEn
 }
 
 // Reset the ball changing its position to the window center
-void Balls::Reset(olc::PixelGameEngine* game)
+void Ball::Reset(double x, double y)
 {
-	m_pos.x = game->ScreenWidth() / 2.f;
-	m_pos.y = game->ScreenHeight() / 2.f;
+	m_pos.x = x;
+	m_pos.y = y;
 }
 
-
 // Changes the ball position based on user input and the natural behaviour of the ball
-void GravityBalls::ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine)
+void GravityBall::ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine)
 {
 	if (game->GetKey(olc::Key::W).bHeld || game->GetKey(olc::Key::UP).bHeld)
 	// Moves UP with a constant velocity -m_vel.y
@@ -78,23 +69,23 @@ void GravityBalls::ChangePos(olc::PixelGameEngine* game, float fElapsedTime, Mov
 }
 
 // Display current stats as position and velocity
-void GravityBalls::DisplayStats(olc::PixelGameEngine* game) const
+void GravityBall::DisplayStats(olc::PixelGameEngine* game) const
 {
 	game->DrawStringDecal({ 5.,5. }, "Position " + m_pos.str());
 	game->DrawStringDecal({ 5. , 15. }, "Velocity " + m_vel.str());
 }
 
-bool GravityBalls::CheckFloorCollision(olc::PixelGameEngine* game) const
+bool GravityBall::CheckFloorCollision(olc::PixelGameEngine* game) const
 {
 	return (m_pos.y + rad > game->ScreenHeight() || m_pos.y - rad < 0.f);
 }
 
-bool GravityBalls::CheckLateralCollision(olc::PixelGameEngine* game) const
+bool GravityBall::CheckLateralCollision(olc::PixelGameEngine* game) const
 {
 	return m_pos.x + rad > game->ScreenWidth() || m_pos.x - rad < 0.f;
 }
 
-void GravityBalls::ManageCollision(olc::PixelGameEngine* game, float fElapsedTime)
+void GravityBall::ManageCollision(olc::PixelGameEngine* game, float fElapsedTime)
 {
 	if (CheckFloorCollision(game))
 	{
@@ -110,12 +101,12 @@ void GravityBalls::ManageCollision(olc::PixelGameEngine* game, float fElapsedTim
 	}
 }
 
-std::vector<olc::vd2d> GravityBalls::Choords() const
+std::vector<olc::vd2d> GravityBall::Choords() const
 {
 	return std::vector<olc::vd2d> { m_pos, m_vel };
 }
 
-std::array<olc::vd2d, 2> GravityBalls::Equation(float fElapsedTime, olc::vd2d position, olc::vd2d speed) const
+std::array<olc::vd2d, 2> GravityBall::Equation(float fElapsedTime, olc::vd2d position, olc::vd2d speed) const
 {
 	std::array<olc::vd2d, 2> res = {
 		olc::vd2d{

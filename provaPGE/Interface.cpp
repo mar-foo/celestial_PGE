@@ -50,7 +50,7 @@ bool Celestial_Simulation::OnUserUpdate(float fElapsedTime)
 			delete(engine);
 			engine = new Euler;
 		}
-		ball.ChangePos(this, fElapsedTime, this->engine);
+		ball->ChangePos(this, fElapsedTime, this->engine);
 		break;
 	case RK4:
 		/* Testing Runge Kutta 4 Integration Methods */
@@ -62,7 +62,7 @@ bool Celestial_Simulation::OnUserUpdate(float fElapsedTime)
 			delete(engine);
 			engine = new class RK4;
 		}
-		ball.ChangePos(this, fElapsedTime, engine);
+		ball->ChangePos(this, fElapsedTime, engine);
 		break;
 	case CELESTIAL:
 		/* Celestial Movement  WIP */
@@ -71,11 +71,11 @@ bool Celestial_Simulation::OnUserUpdate(float fElapsedTime)
 	}
 
 	// Balls Drawer
-	ball.SelfDraw(this, olc::RED);
-	ball.DisplayStats(this);
+	ball->SelfDraw(this, olc::RED);
+	ball->DisplayStats(this);
 
 	// Reset Button
-	if (GetKey(olc::Key::SPACE).bPressed) ball.Reset(this);
+	if (GetKey(olc::Key::SPACE).bPressed) ball->Reset(ScreenWidth() / 2., ScreenHeight() / 2.);
 
 	// Exit Button
 	if (GetKey(olc::Key::F4).bPressed) return false;

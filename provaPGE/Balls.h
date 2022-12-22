@@ -5,7 +5,7 @@
 
 #pragma once
 
-class Balls
+class Ball
 {
 protected:
 	olc::vd2d m_pos;
@@ -14,13 +14,8 @@ protected:
 	friend class MovementEngine;
 
 public:
-	// Constructor
-	Balls(olc::PixelGameEngine* game) {
-		m_pos.x = 360;
-		m_pos.y = 240;
-	}
-
-	Balls(olc::vd2d pos, olc::vd2d vel) : m_pos(pos), m_vel(vel) {}
+	Ball(double x, double y) : m_pos(olc::vd2d(x, y)), m_vel(olc::vd2d(0, 0)) {}
+	Ball(olc::vd2d pos, olc::vd2d vel) : m_pos(pos), m_vel(vel) {}
 
 	// Methods
 	// Drawing
@@ -29,15 +24,12 @@ public:
 	// Old Change Position
 	void ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine);
 	// Reset to Initial Parameters
-	void Reset(olc::PixelGameEngine* game);
+	void Reset(double x, double y);
 
 	virtual std::vector<olc::vd2d> Choords() const= 0;
-
-	// I don't remember what it does
-	void Redo(olc::PixelGameEngine* game);
 };
 
-class GravityBalls : public Balls
+class GravityBall : public Ball
 {
 private:
 	olc::vd2d m_gravity = { 0.0, 10.f };
@@ -45,7 +37,8 @@ private:
 
 public:
 	// constructor
-	GravityBalls(olc::PixelGameEngine* game) : Balls(game) {}
+	GravityBall(double x, double y) : Ball(x, y){}
+
 	// Methods
 	// This change the position, it is implemented using Euler Integration.... Next Version will use Movement Engine
 	void ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine);

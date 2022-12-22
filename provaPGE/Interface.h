@@ -15,7 +15,7 @@ enum Integrators {
 class Celestial_Simulation : public olc::PixelGameEngine
 {
 protected:
-	GravityBalls ball{ this };
+	GravityBall* ball;
 	enum Integrators mode = EULER;
 	bool mode_changed = false;
 	MovementEngine* engine;
@@ -24,18 +24,22 @@ public:
 	//constructor
 	Celestial_Simulation()
 	{
+		ball = new GravityBall(ScreenWidth() / 2., ScreenHeight() / 2.);
 		sAppName = "Proviamo";
 	}
 
-	~Celestial_Simulation() { if (engine) free(engine); };
+        ~Celestial_Simulation() {
+		if (engine)
+			free(engine);
+		if (ball)
+			delete(ball);
+	};
 
 public:
 	//creation
 	bool OnUserCreate() override;
 	//frame update
 	bool OnUserUpdate(float fElapsedTime) override;
-
-
 };
 
 #endif
