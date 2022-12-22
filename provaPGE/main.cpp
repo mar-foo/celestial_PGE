@@ -2,10 +2,10 @@
 
 int main() {
 
-	Interface Inter;
+	Celestial_Simulation simulation;
 
-	if (Inter.Construct(720, 480, 1, 1))
-		Inter.Start();
+	if (simulation.Construct(720, 480, 1, 1))
+		simulation.Start();
 
 	return 0;
 }

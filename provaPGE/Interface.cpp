@@ -1,7 +1,7 @@
 #include "Interface.h"
 #include "MovementEngine.h"
 
-bool Interface::OnUserCreate()
+bool Celestial_Simulation::OnUserCreate()
 {
 	switch (mode)
 	{
@@ -15,7 +15,7 @@ bool Interface::OnUserCreate()
 	return true;
 }
 
-bool Interface::OnUserUpdate(float fElapsedTime)
+bool Celestial_Simulation::OnUserUpdate(float fElapsedTime)
 {
 	// Adding a Grid
 	DrawLineDecal({ 0.f, ScreenHeight() / 2.f }, { (float)ScreenWidth(), ScreenHeight() / 2.f });

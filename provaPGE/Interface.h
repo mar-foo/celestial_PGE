@@ -12,7 +12,7 @@ enum Integrators {
 	CELESTIAL,
 };
 
-class Interface : public olc::PixelGameEngine
+class Celestial_Simulation : public olc::PixelGameEngine
 {
 protected:
 	GravityBalls ball{ this };
@@ -22,12 +22,12 @@ protected:
 
 public:
 	//constructor
-	Interface()
+	Celestial_Simulation()
 	{
 		sAppName = "Proviamo";
 	}
 
-	~Interface() { if (engine) free(engine); };
+	~Celestial_Simulation() { if (engine) free(engine); };
 
 public:
 	//creation
