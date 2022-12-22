@@ -7,21 +7,10 @@
 
 #pragma once
 
-class MovementEngine
-{
-public:
-	virtual void movement(float fElapsedTime, olc::vd2d& position, olc::vd2d & speed, std::function<std::array<olc::vd2d, 2> (float, olc::vd2d, olc::vd2d)>) = 0;
+typedef std::function < void(float,
+                             olc::vd2d &,
+                             olc::vd2d &,
+                             std::function<std::array<olc::vd2d, 2> (float, olc::vd2d, olc::vd2d)>)> MovementFunction;
 
-};
-
-class Euler : public MovementEngine
-{
-public:
-	void movement(float fElapsedTime, olc::vd2d& position, olc::vd2d & speed, std::function<std::array<olc::vd2d, 2> (float, olc::vd2d, olc::vd2d)>) override;
-};
-
-class RK4 : public MovementEngine
-{
-public:
-	void movement(float fElapsedTime, olc::vd2d& position, olc::vd2d& velocity, std::function<std::array<olc::vd2d, 2> (float, olc::vd2d, olc::vd2d)>) override;
-};
+void euler(float fElapsedTime, olc::vd2d& position, olc::vd2d& speed, std::function<std::array<olc::vd2d, 2> (float, olc::vd2d, olc::vd2d)> fun);
+void rk4(float fElapsedTime, olc::vd2d& position, olc::vd2d& speed, std::function<std::array<olc::vd2d, 2> (float, olc::vd2d, olc::vd2d)> fun);

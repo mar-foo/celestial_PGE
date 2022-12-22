@@ -1,15 +1,14 @@
 #include "olcPixelGameEngine.h"
 #include "MovementEngine.h"
 
-
-void Euler::movement(float fElapsedTime, olc::vd2d& position, olc::vd2d& speed, std::function<std::array<olc::vd2d, 2> (float, olc::vd2d, olc::vd2d)> fun)
+void euler(float fElapsedTime, olc::vd2d& position, olc::vd2d& speed, std::function<std::array<olc::vd2d, 2> (float, olc::vd2d, olc::vd2d)> fun)
 {
 	std::array<olc::vd2d, 2> res = fun(fElapsedTime, position, speed);
 	position = res[0];
 	speed = res[1];
 }
 
-void RK4::movement(float fElapsedTime, olc::vd2d& position, olc::vd2d& speed, std::function<std::array<olc::vd2d, 2> (float, olc::vd2d, olc::vd2d)> fun)
+void rk4(float fElapsedTime, olc::vd2d& position, olc::vd2d& speed, std::function<std::array<olc::vd2d, 2> (float, olc::vd2d, olc::vd2d)> fun)
 {
 	std::array<olc::vd2d, 2> k_1 = fun(0., position, speed);
 	std::array<olc::vd2d, 2> k_2 = fun(fElapsedTime/2.f, position + fElapsedTime/2.f * k_1[0], speed + fElapsedTime/2.f * k_1[1]);

@@ -15,7 +15,7 @@ void Ball::SelfDraw(olc::PixelGameEngine* game, olc::Pixel p) const
 }
 
 // Changes the ball position based on user input and the natural behaviour of the ball
-void Ball::ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine)
+void Ball::ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementFunction)
 {
 	if (game->GetKey(olc::Key::W).bHeld || game->GetKey(olc::Key::UP).bHeld) m_pos.y -= m_vel.y * fElapsedTime;
 	if (game->GetKey(olc::Key::A).bHeld || game->GetKey(olc::Key::LEFT).bHeld) m_pos.x -= m_vel.x * fElapsedTime;
@@ -31,7 +31,7 @@ void Ball::Reset(double x, double y)
 }
 
 // Changes the ball position based on user input and the natural behaviour of the ball
-void GravityBall::ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine)
+void GravityBall::ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementFunction engine)
 {
 	if (game->GetKey(olc::Key::W).bHeld || game->GetKey(olc::Key::UP).bHeld)
 	// Moves UP with a constant velocity -m_vel.y
@@ -61,7 +61,7 @@ void GravityBall::ChangePos(olc::PixelGameEngine* game, float fElapsedTime, Move
 	else
 	//Natural ball movement
 	{
-		engine->movement(fElapsedTime, m_pos, m_vel, [this](float fElapsedTime, olc::vd2d position, olc::vd2d speed) {
+		engine(fElapsedTime, m_pos, m_vel, [this](float fElapsedTime, olc::vd2d position, olc::vd2d speed) {
 			return this->Equation(fElapsedTime, position, speed);
 		});
 		ManageCollision(game, fElapsedTime);

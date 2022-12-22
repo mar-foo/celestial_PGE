@@ -17,11 +17,9 @@ class Celestial_Simulation : public olc::PixelGameEngine
 protected:
 	GravityBall* ball;
 	enum Integrators mode = EULER;
-	bool mode_changed = false;
-	MovementEngine* engine;
+	MovementFunction engine;
 
 public:
-	//constructor
 	Celestial_Simulation()
 	{
 		ball = new GravityBall(ScreenWidth() / 2., ScreenHeight() / 2.);
@@ -29,8 +27,6 @@ public:
 	}
 
         ~Celestial_Simulation() {
-		if (engine)
-			free(engine);
 		if (ball)
 			delete(ball);
 	};

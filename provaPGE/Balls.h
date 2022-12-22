@@ -11,7 +11,6 @@ protected:
 	olc::vd2d m_pos;
 	olc::vd2d m_vel{ 50.f, 50.f };
 	int32_t rad{ 7 };
-	friend class MovementEngine;
 
 public:
 	Ball(double x, double y) : m_pos(olc::vd2d(x, y)), m_vel(olc::vd2d(0, 0)) {}
@@ -22,7 +21,7 @@ public:
 	void SelfDraw(olc::PixelGameEngine* game) const;
 	void SelfDraw(olc::PixelGameEngine* game, olc::Pixel p) const;
 	// Old Change Position
-	void ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine);
+	void ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementFunction engine);
 	// Reset to Initial Parameters
 	void Reset(double x, double y);
 
@@ -41,7 +40,7 @@ public:
 
 	// Methods
 	// This change the position, it is implemented using Euler Integration.... Next Version will use Movement Engine
-	void ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementEngine* engine);
+	void ChangePos(olc::PixelGameEngine* game, float fElapsedTime, MovementFunction engine);
 	// Print to screen the ball stats
 	void DisplayStats(olc::PixelGameEngine* game) const;
 	// Checks for collisions
