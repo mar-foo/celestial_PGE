@@ -12,6 +12,7 @@ bool Celestial_Simulation::OnUserCreate()
 		this->engine = rk4;
 		break;
 	}
+
 	return true;
 }
 
@@ -42,13 +43,11 @@ bool Celestial_Simulation::OnUserUpdate(float fElapsedTime)
 	case EULER:
 		DrawStringDecal({ 5., 25. }, "Mode " + std::to_string(mode) + ":\tEuler", olc::GREEN);
 		Clear(olc::BLACK);
-		ball->ChangePos(this, fElapsedTime, this->engine);
 		break;
 	case RK4:
 		/* Testing Runge Kutta 4 Integration Methods */
 		DrawStringDecal({ 5., 25. }, "Mode " + std::to_string(mode) + ":\tRK4", olc::GREEN);
 		Clear(olc::DARK_BLUE);
-		ball->ChangePos(this, fElapsedTime, this->engine);
 		break;
 	case CELESTIAL:
 		/* Celestial Movement  WIP */
@@ -56,15 +55,28 @@ bool Celestial_Simulation::OnUserUpdate(float fElapsedTime)
 		break;
 	}
 
-	// Balls Drawer
-	ball->SelfDraw(this, olc::RED);
-	ball->DisplayStats(this);
-
-	// Reset Button
-	if (GetKey(olc::Key::SPACE).bPressed) ball->Reset(ScreenWidth() / 2., ScreenHeight() / 2.);
+	this->UpdateGravityFields();
+	for (auto celestial : this->celestials) {
+		celestial.ChangePos(this, fElapsedTime, this->engine);
+		celestial.SelfDraw(this, olc::RED);
+	}
 
 	// Exit Button
 	if (GetKey(olc::Key::F4).bPressed) return false;
 
 	return true;
+}
+
+void Celestial_Simulation::UpdateGravityFields(void)
+{
+	int i, j;
+	for (i = 0; i < this->celestials.size(); i++) {
+		this->celestials[i].SetGravity(olc::vd2d(0., 0.));
+		for (j = 0; j < this->celestials.size(); j++) {
+			if (j == i) continue;
+                        this->celestials[i].SetGravity(
+                            this->celestials[i].Gravity() +
+                            this->celestials[j].FieldOn(this->celestials[i]));
+		}
+	}
 }

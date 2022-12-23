@@ -1,4 +1,4 @@
-CXXFLAGS = -std=c++17
+CXXFLAGS += -std=c++17
 LDFLAGS = -lX11 -lGL -lpthread -lpng -lstdc++fs -IprovaPGE
 CC = g++
 
